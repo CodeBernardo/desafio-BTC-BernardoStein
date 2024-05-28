@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { StdInput, StdSelect } from "../inputs";
 import { Planets, SelectOpts } from "../inputs/stdSelect";
+import launchButton from "../../../assets/imgs/launch_button.webp"
 
 export const RegisterAdressForm = (): JSX.Element => {
+
   const planetOptions: SelectOpts[] = [
     { label: "Not selected", value: "not_selected" },
     { label: "Earth", value: "Earth" },
     { label: "Mars", value: "Mars" },
   ];
-
 
   const [selectedPlanet, setSelectedPLanet] = useState<Planets>("not_selected");
 
@@ -39,10 +40,15 @@ export const RegisterAdressForm = (): JSX.Element => {
         )}
         {selectedPlanet === "Mars" && (
           <>
-            <StdInput id="coordinates" type="number" maxLength={4} label="Coordinates" />
+            <StdInput
+              id="coordinates"
+              type="number"
+              maxLength={4}
+              label="Coordinates"
+            />
           </>
         )}
-        <button>Launch</button>
+        <button aria-label="Create adress"><img src={launchButton} alt="Launch Button  image" /></button>
       </form>
     </>
   );
