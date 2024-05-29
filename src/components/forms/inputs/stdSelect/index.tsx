@@ -21,7 +21,7 @@ export const StdSelect = forwardRef<HTMLSelectElement, StdSelectProps>(
     };
 
     return (
-      <>
+      <div className="input__container">
         <label htmlFor={id}>{label}</label>
         <select id={id} {...rest} ref={ref} onChange={handlePlanetChange}>
           {options.map(({ value, label }, idx) => {
@@ -32,7 +32,7 @@ export const StdSelect = forwardRef<HTMLSelectElement, StdSelectProps>(
             );
           })}
         </select>
-      </>
+      </div>
     );
   },
 );

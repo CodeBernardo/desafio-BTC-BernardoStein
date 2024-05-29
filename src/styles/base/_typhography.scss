@@ -1,0 +1,37 @@
+@use "../abstracts/texts.scss" as *;
+
+.title1 {
+  font-size: $fontSize-1;
+}
+
+.title2 {
+  font-size: $fontSize-2;
+}
+
+.title3 {
+  font-size: $fontSize-3;
+}
+
+.text1 {
+  font-size: $fontSize-4;
+}
+
+.text2 {
+  font-size: $fontSize-5;
+}
+
+.text3 {
+  font-size: $fontSize-6;
+}
+
+.bold {
+  font-weight: $fontWeight-700;
+}
+
+.medium {
+  font-weight: $fontWeight-500;
+}
+
+.regular {
+  font-weight: $fontWeight-400;
+}

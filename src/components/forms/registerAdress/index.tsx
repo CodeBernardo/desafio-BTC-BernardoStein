@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaArrowLeft } from "react-icons/fa6";
 import launchButton from "../../../assets/imgs/launch_button.webp";
+import planets from "../../../assets/imgs/planets.webp";
 import { StdInput, StdSelect } from "../inputs";
 import { Planets, SelectOpts } from "../inputs/stdSelect";
+import s from "./index.module.scss";
 
 export const RegisterAdressForm = (): JSX.Element => {
   const {
@@ -22,48 +25,62 @@ export const RegisterAdressForm = (): JSX.Element => {
   const [selectedPlanet, setSelectedPLanet] = useState<Planets>("not_selected");
 
   return (
-    <div className="">
-      <div  className="">
-        <button aria-label="Return">{"<"}</button>
-        <h1 className="">Address</h1>
+    <div className={s.form__container}>
+      <div className={`align ${s.form__header}`}>
+        <button aria-label="Return">
+          <FaArrowLeft size={16} />
+        </button>
+        <h1 className="title3 bold ">Creating new address</h1>
       </div>
-      <form onSubmit={handleSubmit(submit)} className="">
+      <form onSubmit={handleSubmit(submit)} className={`align`}>
         <StdInput
-          id="adress_label"
-          label="Adress label"
+          id="address_label"
+          label="Address label"
           {...register("label")}
         />
-        <StdInput id="full_name" label="Full name" {...register("fullName")} />
-        <StdInput
-          id="phone_number"
-          type="number"
-          label="Mobile Phone"
-          {...register("phone")}
-        />
+        <div className={`${s.paralel__container}`}>
+          <StdInput
+            id="full_name"
+            label="Full name"
+            {...register("fullName")}
+          />
+          <StdInput
+            id="phone_number"
+            type="number"
+            label="Mobile phone"
+            {...register("phone")}
+          />
+        </div>
         <StdSelect
           id="planet_select"
-          label="Planet select"
+          label="Planet"
           options={planetOptions}
           setSelectedPlanet={setSelectedPLanet}
           {...register("planet")}
         />
-        {selectedPlanet === "not_selected" && <h2>Select a planet</h2>}
+        {selectedPlanet === "not_selected" && (
+          <img src={planets} className={`${s.planets__img}`} />
+        )}
         {selectedPlanet === "Earth" && (
           <>
-            <StdInput
-              id="zip_Code"
-              type="number"
-              label="Zip code"
-              {...register("zipCode")}
-            />
             <StdInput
               id="adress_line"
               label="Adress line"
               {...register("adress")}
             />
-            <StdInput id="country" label="Country" {...register("country")} />
-            <StdInput id="state" label="State" {...register("state")} />
-            <StdInput id="city" label="City" {...register("city")} />
+            <div className={`${s.paralel__container}`}>
+              <StdInput id="country" label="Country" {...register("country")} />
+              <StdInput id="state" label="State" {...register("state")} />
+            </div>
+            <div className={`${s.paralel__container}`}>
+              <StdInput id="city" label="City" {...register("city")} />
+              <StdInput
+                id="zip_Code"
+                type="number"
+                label="Zip code"
+                {...register("zipCode")}
+              />
+            </div>
           </>
         )}
         {selectedPlanet === "Mars" && (
