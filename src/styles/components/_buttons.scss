@@ -1,0 +1,19 @@
+@use "../../styles/abstracts/colors" as *;
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.625rem;
+
+  height: 3.125rem;
+
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+
+  filter: drop-shadow(2px 2px 1px #bdbcbc);
+  background-color: $primary-400;
+  color: $neutral-100;
+  cursor: pointer;
+}

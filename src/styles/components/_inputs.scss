@@ -23,6 +23,14 @@ input, select {
       margin: 0;
     }
   }
+  &::placeholder {
+    color: $neutral-300;
+  }
+}
+
+select {
+  appearance: none;
+  cursor: pointer;
 }
 
 .input__container {

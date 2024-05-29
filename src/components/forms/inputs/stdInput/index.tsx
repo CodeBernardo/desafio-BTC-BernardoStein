@@ -1,17 +1,21 @@
 import { forwardRef, InputHTMLAttributes } from "react";
-import s from "./index.module.scss"
+import { FieldError } from "react-hook-form";
 
 interface StdInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
+  error: Partial<FieldError> | undefined;
 }
 
 export const StdInput = forwardRef<HTMLInputElement, StdInputProps>(
-  ({ label, id, ...rest }, ref): JSX.Element => {
+  ({ label, id, error, ...rest }, ref): JSX.Element => {
     return (
       <div className="input__container">
-        <label htmlFor={id} className="text3 medium">{label} *</label>
-        <input id={id} ref={ref} {...rest}/>
+        <label htmlFor={id} className="text3 medium">
+          {label} *
+        </label>
+        <input id={id} ref={ref} {...rest} />
+        <small>{error?.message}</small>
       </div>
     );
   },

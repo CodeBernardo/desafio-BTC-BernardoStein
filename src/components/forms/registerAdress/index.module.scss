@@ -19,11 +19,16 @@
     align-items: center;
     justify-content: center;
     border: 1px solid $neutral-300;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     outline: none;
-    background-color: transparent;
+    background-color: $neutral-100;
     height: 2rem;
     width: 2rem;
+    color: $neutral-900;
+
+    &:hover {
+      background-color: $neutral-100;
+    }
   }
 }
 
@@ -36,5 +41,9 @@
 .planets__img {
   width: 90%;
   margin: 0 auto;
-  filter: drop-shadow(2px 1px 4px #616161);
+  filter: drop-shadow(2px 2px 1.5px #bdbcbc);
+}
+
+.visible {
+  display: none;
 }

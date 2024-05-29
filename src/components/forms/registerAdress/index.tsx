@@ -1,8 +1,10 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa6";
-import launchButton from "../../../assets/imgs/launch_button.webp";
+import { IoRocketSharp } from "react-icons/io5";
 import planets from "../../../assets/imgs/planets.webp";
+import { createAddressSchema } from "../index.schema";
 import { StdInput, StdSelect } from "../inputs";
 import { Planets, SelectOpts } from "../inputs/stdSelect";
 import s from "./index.module.scss";
@@ -11,8 +13,8 @@ export const RegisterAdressForm = (): JSX.Element => {
   const {
     register,
     handleSubmit,
-    // formState: { isSubmitting, isValid },
-  } = useForm();
+    formState: { isValid, errors },
+  } = useForm({ resolver: zodResolver(createAddressSchema) });
 
   const submit = (data: unknown) => console.log(data);
 
@@ -37,18 +39,24 @@ export const RegisterAdressForm = (): JSX.Element => {
           id="address_label"
           label="Address label"
           {...register("label")}
+          placeholder="Home"
+          error={errors.label}
         />
         <div className={`${s.paralel__container}`}>
           <StdInput
             id="full_name"
             label="Full name"
             {...register("fullName")}
+            placeholder="Jhon Doe"
+            error={errors.fullName}
           />
           <StdInput
             id="phone_number"
             type="number"
             label="Mobile phone"
             {...register("phone")}
+            placeholder="00-00000-0000"
+            error={errors.phone}
           />
         </div>
         <StdSelect
@@ -66,19 +74,41 @@ export const RegisterAdressForm = (): JSX.Element => {
             <StdInput
               id="adress_line"
               label="Adress line"
-              {...register("adress")}
+              {...register("address")}
+              placeholder="Random street, 123"
+              error={errors.address}
             />
             <div className={`${s.paralel__container}`}>
-              <StdInput id="country" label="Country" {...register("country")} />
-              <StdInput id="state" label="State" {...register("state")} />
+              <StdInput
+                id="country"
+                label="Country"
+                {...register("country")}
+                placeholder="Us"
+                error={errors.country}
+              />
+              <StdInput
+                id="state"
+                label="State"
+                {...register("state")}
+                placeholder="CA"
+                error={errors.state}
+              />
             </div>
             <div className={`${s.paralel__container}`}>
-              <StdInput id="city" label="City" {...register("city")} />
+              <StdInput
+                id="city"
+                label="City"
+                {...register("city")}
+                placeholder="Sacramento"
+                error={errors.city}
+              />
               <StdInput
                 id="zip_Code"
                 type="number"
                 label="Zip code"
                 {...register("zipCode")}
+                placeholder="0000-000"
+                error={errors.zipCode}
               />
             </div>
           </>
@@ -91,11 +121,16 @@ export const RegisterAdressForm = (): JSX.Element => {
               maxLength={4}
               label="Coordinates"
               {...register("coordinates")}
+              placeholder="0000"
+              error={errors.coordinates}
             />
           </>
         )}
-        <button aria-label="Create adress">
-          <img src={launchButton} alt="Launch button image" />
+        <button
+          aria-label="Create adress"
+          className={`text2 medium ${!isValid ? s.visible : ""}`}
+        >
+          <IoRocketSharp size={20} /> Launch
         </button>
       </form>
     </div>
