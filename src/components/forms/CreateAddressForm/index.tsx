@@ -10,7 +10,7 @@ import { StdInput, StdSelect } from "../inputs";
 import { Planets, SelectOpts } from "../inputs/stdSelect";
 import s from "./index.module.scss";
 
-export const HandleAdressesForm = (): JSX.Element => {
+export const CreateAdressesForm = (): JSX.Element => {
   const {
     register,
     handleSubmit,

@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import earthImg from "../../../assets/imgs/earth.png";
 import marsImg from "../../../assets/imgs/mars.png";
 import { Address } from "../../../data";
+import {
+  AddressContext,
+  AddressContextType,
+} from "../../../providers/addressContext";
 import s from "./index.module.scss";
+import { useNavigate } from "react-router-dom";
+
 
 interface AddressCardProps {
   address: Address;
@@ -11,6 +17,15 @@ interface AddressCardProps {
 export const AddressCard: React.FC<AddressCardProps> = ({
   address,
 }): JSX.Element => {
+
+  const navigate = useNavigate()
+  const { setEditingAddres } = useContext(AddressContext) as AddressContextType;
+
+  const handleEditAddress = (data: Address): void => {
+    setEditingAddres(data)
+    navigate("/edit")
+  }
+
   return (
     <>
       <div className={`${s.card__container}`}>
@@ -32,7 +47,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
             >{`Sector - ${address.coordinates}`}</small>
           )}
           <div className={s.buttons__container}>
-            <button className="bold">Edit address</button>
+            <button className="bold" onClick={() => handleEditAddress(address)}>Edit address</button>
             <button className="bold">Delete address</button>
           </div>
         </div>

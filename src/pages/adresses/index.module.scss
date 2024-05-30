@@ -46,7 +46,10 @@
 
 .addressList__container {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+
+  @media (min-width: 64rem) {
+    grid-template-columns: 1.2fr 1fr;
+  }
 
   .addresslist__items {
     display: flex;
@@ -61,8 +64,13 @@
   }
 
   .astronaut__img {
+    display: none;
     align-self: end;
     justify-self: center;
     transform: scaleX(-1);
+
+    @media (min-width: 64rem) {
+      display: inline;
+    }
   }
 }
