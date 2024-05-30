@@ -1,10 +1,12 @@
-import { HandleAdressesForm } from "./components/forms/registerAdress";
+import { AddressesPage } from "./pages/adresses";
 import "./styles/index.scss";
 
 function App() {
   return (
     <>
-      <HandleAdressesForm />
+      <main>
+        <AddressesPage/>
+      </main>
     </>
   );
 }

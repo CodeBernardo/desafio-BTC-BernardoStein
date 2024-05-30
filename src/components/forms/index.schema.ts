@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createAddressSchema = z
+export const addressSchema = z
   .object({
     label: z.string().min(1, "Label field is required"),
     fullName: z.string().min(1, "Full name field is required"),
@@ -33,7 +33,8 @@ export const createAddressSchema = z
       .default(null),
     coordinates: z
       .string()
-      .min(4, "Coordinates must have 4 digits")
+      .min(1)
+      .max(4, "Coordinates must have only 4 digits")
       .nullish()
       .default(null),
   })

@@ -1,0 +1,79 @@
+@use "../../../styles/abstracts/colors.scss" as *;
+
+.form__container {
+  form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+
+    .astronaut {
+      display: none;
+    }
+
+    div {
+      display: grid;
+      height: fit-content;
+    }
+
+    @media (min-width: 64rem) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 30rem;
+
+      .astronaut {
+        display: inline;
+        transform: scaleX(-1);
+        height: 31rem;
+        justify-self: center;
+      }
+    }
+  }
+}
+
+.form__header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 80px;
+  border-bottom: 0.0625rem solid $neutral-300;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.0625rem solid $neutral-300;
+    border-radius: 8px;
+    outline: none;
+    background-color: $neutral-100;
+    height: 2rem;
+    width: 2rem;
+    color: $neutral-900;
+
+    &:hover {
+      background-color: $neutral-100;
+    }
+  }
+}
+
+.paralel__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+}
+
+.planets__img {
+  width: 90%;
+  max-width: 18rem;
+  margin: 0 auto;
+  filter: drop-shadow(0.125rem 0.125rem 0.0938rem #bdbcbc);
+}
+
+.not__visible {
+  display: none;
+}
+
+.submit__button {
+  padding: 0 1.25rem;
+  width: 100%;
+  margin-top: 1rem;
+}
