@@ -1,30 +1,53 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoRocketSharp } from "react-icons/io5";
+import { z } from "zod";
 import planets from "../../../assets/imgs/planets.webp";
 import { createAddressSchema } from "../index.schema";
 import { StdInput, StdSelect } from "../inputs";
 import { Planets, SelectOpts } from "../inputs/stdSelect";
 import s from "./index.module.scss";
 
-export const RegisterAdressForm = (): JSX.Element => {
+export const HandleAdressesForm = (): JSX.Element => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isValid, errors },
   } = useForm({ resolver: zodResolver(createAddressSchema) });
 
-  const submit = (data: unknown) => console.log(data);
-
+  
   const planetOptions: SelectOpts[] = [
     { label: "Not selected", value: "not_selected" },
     { label: "Earth", value: "Earth" },
     { label: "Mars", value: "Mars" },
   ];
-
+  
   const [selectedPlanet, setSelectedPLanet] = useState<Planets>("not_selected");
+  
+  type SubmitPayload = z.infer<typeof createAddressSchema>;
+
+  const submit = (payload: SubmitPayload) => {
+    console.log(payload);
+    reset()
+  };
+
+  useEffect(() => {
+    if (selectedPlanet === "Earth" || selectedPlanet === "not_selected") {
+      reset({ coordinates: null });
+    }
+    if (selectedPlanet === "Mars" || selectedPlanet === "not_selected") {
+      reset({
+        address: null,
+        country: null,
+        state: null,
+        city: null,
+        zipCode: null,
+      });
+    }
+  }, [selectedPlanet]);
 
   return (
     <div className={s.form__container}>
@@ -118,7 +141,6 @@ export const RegisterAdressForm = (): JSX.Element => {
             <StdInput
               id="coordinates"
               type="number"
-              maxLength={4}
               label="Coordinates"
               {...register("coordinates")}
               placeholder="0000"
@@ -128,7 +150,7 @@ export const RegisterAdressForm = (): JSX.Element => {
         )}
         <button
           aria-label="Create adress"
-          className={`text2 medium ${!isValid ? s.visible : ""}`}
+          className={`text2 medium ${!isValid ? s.not__visible : ""}`}
         >
           <IoRocketSharp size={20} /> Launch
         </button>

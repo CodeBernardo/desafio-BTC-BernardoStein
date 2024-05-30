@@ -1,10 +1,10 @@
-import { RegisterAdressForm } from "./components/forms/registerAdress";
+import { HandleAdressesForm } from "./components/forms/registerAdress";
 import "./styles/index.scss";
 
 function App() {
   return (
     <>
-      <RegisterAdressForm />
+      <HandleAdressesForm />
     </>
   );
 }

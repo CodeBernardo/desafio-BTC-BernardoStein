@@ -14,7 +14,7 @@ export const StdInput = forwardRef<HTMLInputElement, StdInputProps>(
         <label htmlFor={id} className="text3 medium">
           {label} *
         </label>
-        <input id={id} ref={ref} {...rest} />
+        <input id={id} ref={ref} {...rest}/>
         <small>{error?.message}</small>
       </div>
     );
