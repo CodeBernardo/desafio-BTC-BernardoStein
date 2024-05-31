@@ -16,6 +16,7 @@ interface StdSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 export const StdSelect = forwardRef<HTMLSelectElement, StdSelectProps>(
   ({ id, label, options, setSelectedPlanet, ...rest }, ref): JSX.Element => {
+    
     const handlePlanetChange = (evt: ChangeEvent<HTMLSelectElement>) => {
       setSelectedPlanet(evt.target.value as Planets);
     };

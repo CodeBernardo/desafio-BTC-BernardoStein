@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoRocketSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import astronaut from "../../../assets/imgs/astronauta_2.png";
+import astronaut from "../../../assets/imgs/Astronauta_1.webp";
 import planets from "../../../assets/imgs/planets.webp";
 import { Address } from "../../../database";
 import {
@@ -155,14 +155,14 @@ export const EditAdressForm = (): JSX.Element => {
           <div className={s.buttons__container}>
             <button
               aria-label="Create adress"
-              className={`text2 medium ${!isValid ? s.not__visible : ""} ${
+              className={`text3 medium ${!isValid ? s.not__visible : ""} ${
                 s.submit__button
               }`}
             >
               <IoRocketSharp size={20} /> Save changes
             </button>
             <button
-              className={`text2 medium ${s.submit__button}`}
+              className={`text3 medium ${s.submit__button}`}
               aria-label="Cancel"
               onClick={() => navigate("/")}
             >

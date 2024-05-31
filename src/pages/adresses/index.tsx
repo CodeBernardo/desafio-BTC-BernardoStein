@@ -1,3 +1,4 @@
+import { motion, stagger, useAnimate, useInView } from "framer-motion";
 import { useContext } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +11,22 @@ import s from "./index.module.scss";
 
 export const AddressesPage = (): JSX.Element => {
   const { addressList } = useContext(AddressContext) as AddressContextType;
+  const [scope, animate] = useAnimate();
+  const isInView = useInView(scope);
+   const staggeredItens = stagger(0.055);
+
+  if (isInView) {
+    animate(
+      "li",
+      { opacity: [0, 1], y: [10, 0] },
+      { duration: 0.3, delay: staggeredItens },
+    );
+  }
+
   const navigate = useNavigate();
 
   return (
-    <>
+    <motion.div animate={{ opacity: [0, 1] }}>
       <div className={`align ${s.page__header}`}>
         <button aria-label="Return">
           <FaArrowLeft size={16} />
@@ -32,7 +45,7 @@ export const AddressesPage = (): JSX.Element => {
             </button>
           </div>
           <h2 className="text2 bold">Address list</h2>
-          <ul>
+          <ul ref={scope}>
             {addressList.map((address, idx) => {
               return (
                 <li key={idx}>
@@ -43,6 +56,6 @@ export const AddressesPage = (): JSX.Element => {
           </ul>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };

@@ -19,7 +19,9 @@ export const AddressContext = createContext<AddressContextType | undefined>(
 export const AddressProvider: React.FC<AddressProviderProps> = ({
   children,
 }): JSX.Element => {
+
   const [editingAddress, setEditingAddres] = useState<Address | undefined>();
+  
   const [addressList, setAddressList] = useState<Address[]>(addresslistDB);
 
   return (

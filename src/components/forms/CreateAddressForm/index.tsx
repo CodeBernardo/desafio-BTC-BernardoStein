@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -17,7 +18,6 @@ import { Planets, SelectOpts } from "../inputs/stdSelect";
 import s from "./index.module.scss";
 
 export const CreateAdressesForm = (): JSX.Element => {
-
   const { addressList, setAddressList } = useContext(
     AddressContext,
   ) as AddressContextType;
@@ -29,18 +29,18 @@ export const CreateAdressesForm = (): JSX.Element => {
     formState: { isValid, errors },
   } = useForm<Address>({ resolver: zodResolver(addressSchema) });
 
+  const navigate = useNavigate();
+
+  const [selectedPlanet, setSelectedPLanet] = useState<Planets>("not_selected");
+
   const planetOptions: SelectOpts[] = [
     { label: "Not selected", value: "not_selected" },
     { label: "Earth", value: "Earth" },
     { label: "Mars", value: "Mars" },
   ];
 
-  const navigate = useNavigate();
-
-  const [selectedPlanet, setSelectedPLanet] = useState<Planets>("not_selected");
-
   const submit: SubmitHandler<Address> = (payload: Address) => {
-    const newAddress = { ...payload }
+    const newAddress = { ...payload };
     setAddressList([...addressList, newAddress]);
     reset();
     navigate("/");
@@ -64,7 +64,7 @@ export const CreateAdressesForm = (): JSX.Element => {
   return (
     <div className={s.form__container}>
       <div className={`align ${s.form__header}`}>
-        <button aria-label="Return" onClick={()=>navigate("/")}>
+        <button aria-label="Return" onClick={() => navigate("/")}>
           <FaArrowLeft size={16} />
         </button>
         <h1 className="title3 bold ">Creating new address</h1>
@@ -103,10 +103,14 @@ export const CreateAdressesForm = (): JSX.Element => {
             {...register("planet")}
           />
           {selectedPlanet === "not_selected" && (
-            <img src={planets} className={`${s.planets__img}`} />
+            <motion.img
+              src={planets}
+              animate={{ opacity: [0, 1] }}
+              className={`${s.planets__img}`}
+            />
           )}
           {selectedPlanet === "Earth" && (
-            <>
+            <motion.div animate={{ opacity: [0, 1] }}>
               <StdInput
                 id="adress_line"
                 label="Adress line"
@@ -147,10 +151,10 @@ export const CreateAdressesForm = (): JSX.Element => {
                   error={errors.zipCode}
                 />
               </div>
-            </>
+            </motion.div>
           )}
           {selectedPlanet === "Mars" && (
-            <>
+            <motion.div animate={{ opacity: [0, 1] }}>
               <StdInput
                 id="coordinates"
                 type="number"
@@ -159,16 +163,18 @@ export const CreateAdressesForm = (): JSX.Element => {
                 placeholder="0000"
                 error={errors.coordinates}
               />
-            </>
+            </motion.div>
           )}
-          <button
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.02 }}
             aria-label="Create adress"
             className={`text2 medium ${!isValid ? s.not__visible : ""} ${
               s.submit__button
             }`}
           >
             <IoRocketSharp size={20} /> Launch
-          </button>
+          </motion.button>
         </div>
         <img src={astronaut} alt="Image of astronaut" className={s.astronaut} />
       </form>

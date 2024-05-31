@@ -17,6 +17,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
   data,
 }): JSX.Element => {
   const navigate = useNavigate();
+  
   const { setEditingAddres, addressList, setAddressList } = useContext(
     AddressContext,
   ) as AddressContextType;
@@ -27,8 +28,8 @@ export const AddressCard: React.FC<AddressCardProps> = ({
   };
 
   const deleteAddress = (id: string) => {
-    const newAddressList = addressList.filter((address) => address.id !== id );
-    setAddressList(newAddressList)
+    const newAddressList = addressList.filter((address) => address.id !== id);
+    setAddressList(newAddressList);
   };
 
   return (
