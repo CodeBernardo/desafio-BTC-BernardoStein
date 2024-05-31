@@ -1,54 +1,63 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import earthImg from "../../../assets/imgs/earth.png";
 import marsImg from "../../../assets/imgs/mars.png";
-import { Address } from "../../../data";
+import { Address } from "../../../database";
 import {
   AddressContext,
   AddressContextType,
 } from "../../../providers/addressContext";
 import s from "./index.module.scss";
-import { useNavigate } from "react-router-dom";
-
 
 interface AddressCardProps {
-  address: Address;
+  data: Address;
 }
 
 export const AddressCard: React.FC<AddressCardProps> = ({
-  address,
+  data,
 }): JSX.Element => {
-
-  const navigate = useNavigate()
-  const { setEditingAddres } = useContext(AddressContext) as AddressContextType;
+  const navigate = useNavigate();
+  const { setEditingAddres, addressList, setAddressList } = useContext(
+    AddressContext,
+  ) as AddressContextType;
 
   const handleEditAddress = (data: Address): void => {
-    setEditingAddres(data)
-    navigate("/edit")
-  }
+    setEditingAddres(data);
+    navigate("/edit");
+  };
+
+  const deleteAddress = (id: string) => {
+    const newAddressList = addressList.filter((address) => address.id !== id );
+    setAddressList(newAddressList)
+  };
 
   return (
     <>
       <div className={`${s.card__container}`}>
         <img
-          src={address.planet === "Earth" ? earthImg : marsImg}
+          src={data.planet === "Earth" ? earthImg : marsImg}
           alt="Planet img"
         />
         <div className={s.infos__container}>
-          <p className={`bold ${s.card__label}`}>{address.label}</p>
-          <h2 className="text1 bold">{address.fullName}</h2>
-          <p className="text2 medium">{address.phone}</p>
-          {address.planet === "Earth" ? (
+          <p className={`bold ${s.card__label}`}>{data.label}</p>
+          <h2 className="text1 bold">{data.fullName}</h2>
+          <p className="text2 medium">{data.phone}</p>
+          {data.planet === "Earth" ? (
             <small
               className={s.address__info}
-            >{`${address.address} - ${address.city} / ${address.zipCode} - ${address.state} / ${address.country}`}</small>
+            >{`${data.address} - ${data.city} / ${data.zipCode} - ${data.state} / ${data.country}`}</small>
           ) : (
             <small
               className={s.address__info}
-            >{`Sector - ${address.coordinates}`}</small>
+            >{`Sector - ${data.coordinates}`}</small>
           )}
           <div className={s.buttons__container}>
-            <button className="bold" onClick={() => handleEditAddress(address)}>Edit address</button>
-            <button className="bold">Delete address</button>
+            <button className="bold" onClick={() => handleEditAddress(data)}>
+              Edit address
+            </button>
+            <button className="bold" onClick={() => deleteAddress(data.id)}>
+              Delete address
+            </button>
           </div>
         </div>
       </div>

@@ -1,10 +1,17 @@
+import { useContext } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import astronaut from "../../assets/imgs/Astronauta_0.png";
+import { useNavigate } from "react-router-dom";
 import { AddressCard } from "../../components/cards/addressCard";
-import { addresslist } from "../../data";
+import {
+  AddressContext,
+  AddressContextType,
+} from "../../providers/addressContext";
 import s from "./index.module.scss";
 
 export const AddressesPage = (): JSX.Element => {
+  const { addressList } = useContext(AddressContext) as AddressContextType;
+  const navigate = useNavigate();
+
   return (
     <>
       <div className={`align ${s.page__header}`}>
@@ -17,20 +24,24 @@ export const AddressesPage = (): JSX.Element => {
         <div className={s.addresslist__items}>
           <div className={`${s.search__container}`}>
             <input type="text" placeholder="Search address" />
-            <button className="text3 medium">Add address</button>
+            <button
+              className="text3 medium"
+              onClick={() => navigate("/create")}
+            >
+              Add address
+            </button>
           </div>
           <h2 className="text2 bold">Address list</h2>
           <ul>
-            {addresslist.map((address, idx) => {
+            {addressList.map((address, idx) => {
               return (
                 <li key={idx}>
-                  <AddressCard address={{ ...address }} />
+                  <AddressCard data={{ ...address }} />
                 </li>
               );
             })}
           </ul>
         </div>
-        <img src={astronaut} alt="" className={s.astronaut__img} />
       </div>
     </>
   );

@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoRocketSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import astronaut from "../../../assets/imgs/astronauta_2.png";
 import planets from "../../../assets/imgs/planets.webp";
+import { Address } from "../../../database";
 import {
   AddressContext,
   AddressContextType,
@@ -15,14 +17,17 @@ import { Planets, SelectOpts } from "../inputs/stdSelect";
 import s from "./index.module.scss";
 
 export const EditAdressForm = (): JSX.Element => {
-  const { editingAddress } = useContext(AddressContext) as AddressContextType;
+  const { editingAddress, addressList } = useContext(
+    AddressContext,
+  ) as AddressContextType;
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isValid, errors },
-  } = useForm({
+    formState: { errors, isValid },
+  } = useForm<Address>({
     resolver: zodResolver(addressSchema),
     defaultValues: { ...editingAddress },
   });
@@ -33,21 +38,26 @@ export const EditAdressForm = (): JSX.Element => {
     { label: "Mars", value: "Mars" },
   ];
 
-  const [selectedPlanet, setSelectedPLanet] = useState<Planets>(editingAddress?.planet as Planets);
+  const [selectedPlanet, setSelectedPLanet] = useState<Planets>(
+    editingAddress?.planet as Planets,
+  );
 
-  const submit = (payload: FieldValues) => {
-    console.log(payload);
+  const submit: SubmitHandler<Address> = (payload: Address) => {
+    const addressFound = addressList.findIndex(
+      (address) => address.id === payload.id,
+    );
+    addressList[addressFound] = { ...payload };
     reset();
+    navigate("/");
   };
-
 
   return (
     <div className={s.form__container}>
       <div className={`align ${s.form__header}`}>
-        <button aria-label="Return">
+        <button aria-label="Return" onClick={() => navigate("/")}>
           <FaArrowLeft size={16} />
         </button>
-        <h1 className="title3 bold ">Creating new address</h1>
+        <h1 className="title3 bold ">Editing address</h1>
       </div>
       <form onSubmit={handleSubmit(submit)} className={`align`}>
         <div>
@@ -142,15 +152,23 @@ export const EditAdressForm = (): JSX.Element => {
               />
             </>
           )}
-          <button>Discard changes</button>
-          <button
-            aria-label="Create adress"
-            className={`text2 medium ${!isValid ? s.not__visible : ""} ${
-              s.submit__button
-            }`}
-          >
-            <IoRocketSharp size={20} /> Save
-          </button>
+          <div className={s.buttons__container}>
+            <button
+              aria-label="Create adress"
+              className={`text2 medium ${!isValid ? s.not__visible : ""} ${
+                s.submit__button
+              }`}
+            >
+              <IoRocketSharp size={20} /> Save changes
+            </button>
+            <button
+              className={`text2 medium ${s.submit__button}`}
+              aria-label="Cancel"
+              onClick={() => navigate("/")}
+            >
+              Discard changes
+            </button>
+          </div>
         </div>
         <img src={astronaut} alt="Image of astronaut" className={s.astronaut} />
       </form>

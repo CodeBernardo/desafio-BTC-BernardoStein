@@ -3,8 +3,9 @@ import { addressSchema } from "../components/forms/index.schema";
 
 export type Address = z.infer<typeof addressSchema>;
 
-export const addresslist: Address[] = [
+export const addresslistDB: Address[] = [
   {
+    id: "e725f7db-d460-4461-b379-537032caadf6",
     label: "Main House",
     fullName: "Bernardo Stein",
     phone: "51998488806",
@@ -17,6 +18,7 @@ export const addresslist: Address[] = [
     coordinates: null,
   },
   {
+    id: "9d48e12f-43e8-4798-9283-8325c7b9600e",
     label: "Summer House",
     fullName: "Bernardo Stein",
     phone: "51998488806",

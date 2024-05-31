@@ -1,22 +1,33 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { useContext, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoRocketSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import astronaut from "../../../assets/imgs/astronauta_2.png";
 import planets from "../../../assets/imgs/planets.webp";
+import { Address } from "../../../database";
+import {
+  AddressContext,
+  AddressContextType,
+} from "../../../providers/addressContext";
 import { addressSchema } from "../index.schema";
 import { StdInput, StdSelect } from "../inputs";
 import { Planets, SelectOpts } from "../inputs/stdSelect";
 import s from "./index.module.scss";
 
 export const CreateAdressesForm = (): JSX.Element => {
+
+  const { addressList, setAddressList } = useContext(
+    AddressContext,
+  ) as AddressContextType;
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { isValid, errors },
-  } = useForm({ resolver: zodResolver(addressSchema) });
+  } = useForm<Address>({ resolver: zodResolver(addressSchema) });
 
   const planetOptions: SelectOpts[] = [
     { label: "Not selected", value: "not_selected" },
@@ -24,11 +35,15 @@ export const CreateAdressesForm = (): JSX.Element => {
     { label: "Mars", value: "Mars" },
   ];
 
+  const navigate = useNavigate();
+
   const [selectedPlanet, setSelectedPLanet] = useState<Planets>("not_selected");
 
-  const submit = (payload: FieldValues) => {
-    console.log(payload);
+  const submit: SubmitHandler<Address> = (payload: Address) => {
+    const newAddress = { ...payload }
+    setAddressList([...addressList, newAddress]);
     reset();
+    navigate("/");
   };
 
   useEffect(() => {
@@ -49,7 +64,7 @@ export const CreateAdressesForm = (): JSX.Element => {
   return (
     <div className={s.form__container}>
       <div className={`align ${s.form__header}`}>
-        <button aria-label="Return">
+        <button aria-label="Return" onClick={()=>navigate("/")}>
           <FaArrowLeft size={16} />
         </button>
         <h1 className="title3 bold ">Creating new address</h1>

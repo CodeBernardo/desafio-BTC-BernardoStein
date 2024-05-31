@@ -47,10 +47,6 @@
 .addressList__container {
   display: grid;
 
-  @media (min-width: 64rem) {
-    grid-template-columns: 1.2fr 1fr;
-  }
-
   .addresslist__items {
     display: flex;
     flex-direction: column;
@@ -59,7 +55,12 @@
     ul {
       display: flex;
       flex-direction: column;
-      row-gap: 1rem;
+      gap: 1rem;
+
+      @media (min-width: 64rem) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
     }
   }
 

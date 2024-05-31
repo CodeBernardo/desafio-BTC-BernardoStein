@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const addressSchema = z
   .object({
+    id: z.string().uuid().default(crypto.randomUUID()),
     label: z.string().min(1, "Label field is required"),
     fullName: z.string().min(1, "Full name field is required"),
     phone: z.string().min(11, "Invalid phone format, must have 11 digits"),
@@ -33,14 +34,14 @@ export const addressSchema = z
       .default(null),
     coordinates: z
       .string()
-      .min(1)
+      .min(4)
       .max(4, "Coordinates must have only 4 digits")
       .nullish()
       .default(null),
   })
   .refine(
     ({ fullName }) => {
-      const validated = fullName.split(" ");
+      const validated = fullName.trim().split(" ");
 
       return validated.length >= 2;
     },
