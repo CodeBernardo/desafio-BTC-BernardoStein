@@ -12,7 +12,7 @@ export type AddressContextType = {
   setAddressList: React.Dispatch<React.SetStateAction<Address[]>>;
 };
 
-export const AddressContext = createContext<AddressContextType | undefined>(
+export const AddressContext = createContext<AddressContextType | undefined>( 
   undefined,
 );
 
